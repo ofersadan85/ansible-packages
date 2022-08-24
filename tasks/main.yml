@@ -1,4 +1,9 @@
 ---
+- name: Gather pkg_mgr facts if not already available
+  ansible.builtin.setup:
+    gather_subset:
+      - pkg_mgr
+  when: ansible_pkg_mgr is not defined
 
 - name: Ensure archlinux-keyring is updated
   community.general.pacman:
