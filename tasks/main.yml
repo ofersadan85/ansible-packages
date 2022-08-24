@@ -1,0 +1,62 @@
+---
+
+- name: Ensure archlinux-keyring is updated
+  community.general.pacman:
+    name: archlinux-keyring
+    state: latest
+    update_cache: yes
+  when: ansible_pkg_mgr == "pacman"
+
+- name: Install & update common packages
+  action: >
+    {{ ansible_pkg_mgr }} name={{ packages }} state=latest update_cache=yes
+  vars:
+    packages:
+      - ansible
+      - ca-certificates
+      - curl
+      - docker
+      - docker-compose
+      - git
+      - gnupg
+      - htop
+      - jq
+      - neofetch
+      - rclone
+      - sudo
+      - tmux
+      - zsh
+
+- name: Install & update apt packages
+  ansible.builtin.apt:
+    name:
+      - apt-transport-https
+      - python3-pip
+      - python3-pip
+      - software-properties-common
+    state: latest
+    update_cache: yes
+  when: ansible_pkg_mgr == "apt"
+
+- name: Install & update pacman packages
+  community.general.pacman:
+    name:
+      - cronie
+      - python-pip
+      - which
+    state: latest
+    update_cache: yes
+  when: ansible_pkg_mgr == "pacman"
+
+- name: Perform apt dist-upgrade & autoremove
+  ansible.builtin.apt:
+    autoremove: yes
+    update_cache: yes
+    upgrade: dist
+  when: ansible_pkg_mgr == "apt"
+
+- name: Perform pacman full upgrade
+  community.general.pacman:
+    update_cache: yes
+    upgrade: yes
+  when: ansible_pkg_mgr == "pacman"

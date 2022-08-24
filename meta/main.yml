@@ -1,0 +1,16 @@
+galaxy_info:
+  author: Ofer Sadan
+  description: This role will set up my minimal required packages on new servers (meant for internal use only)
+  license: MIT
+  role_name: packages
+  min_ansible_version: 2.9
+  platforms:
+  - name: Debian
+    versions:
+    - all
+  - name: Ubuntu
+    versions:
+    - all
+  - name: ArchLinux
+    versions:
+    - all
